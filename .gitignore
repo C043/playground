@@ -1,0 +1,24 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+
+# VSCode and IDEs
+.vscode/
+.idea/
+
+# Mac/Linux system files
+.DS_Store
+*.swp
+
+.log
+.env
+node_modules
