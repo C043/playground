@@ -15,7 +15,7 @@ function App() {
       connection.current.send(JSON.stringify({ text }));
       setText("");
 
-      if (mediaSource.current?.readyState === "open" && sourceBuffer.current) {
+      if (mediaSource.current) {
         try {
           sourceBuffer.current?.abort();
           sourceBuffer.current?.remove(0, sourceBuffer.current.buffered.end(0));
