@@ -89,3 +89,14 @@ def evenOrOdd(num: int):
 
 print(evenOrOdd(5))
 print(evenOrOdd(2))
+
+x = [1, 2, 3, 4, 5]
+
+
+def getSecondHalfList(array: list):
+    length: int = len(array)
+    firstHalf: int = length // 2
+    return array[firstHalf:]
+
+
+print(getSecondHalfList(x))
