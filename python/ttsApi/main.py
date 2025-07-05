@@ -35,7 +35,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
             file_path.unlink()
         except Exception as err:
-            await websocket.send_text(f"Error: {str(err)}")
+            if websocket.client_state.name == "DISCONNECTED":
+                print("Client disconnected, no response sent.")
+            else:
+                try:
+                    await websocket.send_text(f"Error: {str(err)}")
+                except RuntimeError:
+                    print("Tried to send after disconnect.")
             break
 
 
