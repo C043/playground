@@ -7,6 +7,11 @@ function App() {
   const sourceBuffer = useRef<SourceBuffer | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [text, setText] = useState("");
+  const [isReconnecting, setReconnecting] = useState(false);
+
+  const audioQueue: Uint8Array[] = [];
+
+  const reconnectToWs = () => {};
 
   const sendText = (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,36 +19,58 @@ function App() {
     if (connection.current?.readyState === WebSocket.OPEN) {
       connection.current.send(JSON.stringify({ text }));
       setText("");
-
-      if (mediaSource.current) {
-        try {
-          sourceBuffer.current?.abort();
-          sourceBuffer.current?.remove(0, sourceBuffer.current.buffered.end(0));
-        } catch (err) {
-          console.error(`There was an error playing the audio: ${err}`);
-        }
-      }
     } else {
       window.alert("WebSocket is not open.");
     }
   };
 
-  useEffect(() => {
+  const processQueue = () => {
+    if (!sourceBuffer.current || sourceBuffer.current.updating) return;
+    const chunk = audioQueue.shift();
+    if (chunk) {
+      sourceBuffer.current.appendBuffer(chunk);
+
+      const isPlaying =
+        audioRef.current &&
+        !audioRef.current.paused &&
+        !audioRef.current.ended &&
+        audioRef.current.readyState > 2;
+
+      if (!isPlaying) {
+        audioRef.current?.play().catch((err) => {
+          console.warn(`Autoplay failed: ${err}`);
+        });
+      }
+    }
+  };
+
+  const connectToWs = () => {
     const socket = new WebSocket("ws://localhost:8000/ws");
     socket.binaryType = "arraybuffer";
 
     socket.addEventListener("message", (ev) => {
       if (ev.data instanceof ArrayBuffer && sourceBuffer.current) {
         const buffer = new Uint8Array(ev.data);
-        sourceBuffer.current.appendBuffer(buffer);
+        audioQueue.push(buffer);
 
-        audioRef.current?.play().catch((err) => {
-          console.warn(`Autoplay failed: ${err}`);
-        });
+        processQueue();
       }
     });
 
+    socket.addEventListener("close", () => {
+      console.log("Disconnected, reconnecting...");
+      setTimeout(connectToWs, 1000);
+    });
+
+    socket.addEventListener("error", () => {
+      socket.close();
+    });
+
     connection.current = socket;
+  };
+
+  useEffect(() => {
+    connectToWs();
 
     mediaSource.current = new MediaSource();
     if (audioRef.current && mediaSource.current) {
@@ -53,13 +80,11 @@ function App() {
         if (mediaSource.current && !sourceBuffer.current) {
           sourceBuffer.current =
             mediaSource.current.addSourceBuffer("audio/mpeg");
+
+          sourceBuffer.current.addEventListener("updateend", processQueue);
         }
       });
     }
-
-    return () => {
-      socket.close();
-    };
   }, []);
 
   return (
