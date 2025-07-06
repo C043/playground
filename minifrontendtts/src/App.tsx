@@ -1,5 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
+import React, { useEffect, useRef, useState } from "react";
+import { split } from "sentence-splitter";
+import { getDocument } from "pdfjs-dist";
+import workerSrc from "pdfjs-dist/build/pdf.worker?url";
+import { GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
+
+// Set the worker path
+GlobalWorkerOptions.workerSrc = workerSrc;
+GlobalWorkerOptions.standardFontDataUrl = "/pdfjs/standard_fonts/";
 
 function App() {
   const connection = useRef<WebSocket | null>(null);
@@ -7,18 +15,67 @@ function App() {
   const sourceBuffer = useRef<SourceBuffer | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [text, setText] = useState("");
-  const [isReconnecting, setReconnecting] = useState(false);
+  let sentencesToSend: string[] = [];
+  const [pdfText, setPdfText] = useState("");
+  const [viewerUrl, setViewerUrl] = useState("");
+  const [pdfFile, setPdfFile] = useState<Uint8Array | null>(null);
+  const [showViewer, setShowViewer] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const audioQueue: Uint8Array[] = [];
 
-  const reconnectToWs = () => {};
+  const handleButtonClick = () => fileInputRef.current?.click();
 
-  const sendText = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFileChange = async (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const file = ev.target.files?.[0];
+    if (!file || file.type !== "application/pdf") return;
+
+    const arrayBuffer = await file.arrayBuffer();
+
+    const uint8ArrayForViewer = new Uint8Array(arrayBuffer); // used for blob + Viewer
+    const uint8ArrayForPdfJS = new Uint8Array(arrayBuffer); // used for text extraction
+
+    const uint8Array = new Uint8Array(uint8ArrayForPdfJS);
+
+    const pdf = await getDocument(uint8Array).promise;
+
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items
+        .map((item) => ("str" in item ? item.str : ""))
+        .join(" ");
+      fullText += pageText + "\n";
+    }
+
+    const document = split(fullText);
+    const sentences = document
+      .filter((node) => node.type === "Sentence")
+      .map((node) => node.raw.trim());
+
+    sentencesToSend = sentences;
+    sendTextFromPdf();
+    setPdfText(fullText);
+    setPdfFile(uint8ArrayForViewer);
+    setShowViewer(true);
+  };
+
+  const sendText = (ev: React.FormEvent) => {
+    ev.preventDefault();
 
     if (connection.current?.readyState === WebSocket.OPEN) {
       connection.current.send(JSON.stringify({ text }));
       setText("");
+    } else {
+      window.alert("WebSocket is not open.");
+    }
+  };
+
+  const sendTextFromPdf = () => {
+    if (connection.current?.readyState === WebSocket.OPEN) {
+      const sentence = sentencesToSend.shift();
+      connection.current.send(JSON.stringify({ text: sentence }));
     } else {
       window.alert("WebSocket is not open.");
     }
@@ -81,11 +138,26 @@ function App() {
           sourceBuffer.current =
             mediaSource.current.addSourceBuffer("audio/mpeg");
 
-          sourceBuffer.current.addEventListener("updateend", processQueue);
+          sourceBuffer.current.addEventListener("updateend", () => {
+            processQueue();
+            sendTextFromPdf();
+          });
         }
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (!pdfFile) return;
+
+    const blob = new Blob([pdfFile], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    setViewerUrl(url);
+
+    return () => URL.revokeObjectURL(url);
+  }, [pdfFile]);
+
+  useEffect(() => {}, [pdfText]);
 
   return (
     <>
@@ -99,6 +171,30 @@ function App() {
         <button type="submit">Send</button>
       </form>
       <audio ref={audioRef} muted={false} autoPlay hidden />
+      <input
+        onChange={handleFileChange}
+        type="file"
+        accept="application/pdf"
+        hidden
+        ref={fileInputRef}
+      />
+      <button onClick={handleButtonClick}>Upload pdf</button>
+      {showViewer && viewerUrl && (
+        <iframe
+          src={viewerUrl}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100%",
+            height: "100%",
+            border: "none",
+            zIndex: 9999,
+          }}
+        />
+      )}
     </>
   );
 }
