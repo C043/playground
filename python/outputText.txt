@@ -1,7 +1,6 @@
 call
 me
-ishmael
-some
+ishmaelsome
 years
 agonever
 mind
@@ -38,8 +37,7 @@ watery
 part
 of
 the
-world
-it
+worldit
 is
 a
 way
@@ -53,8 +51,7 @@ spleen
 and
 regulating
 the
-circulation
-whenever
+circulationwhenever
 i
 find
 myself
