@@ -33,3 +33,16 @@ def removeIfDuplicate(array: list, value):
 
 removeIfDuplicate(duplicatedList, 1)
 print(duplicatedList)
+
+nums: list = [1, -5, 3, 5, -10]
+newList: list = [num for num in nums if num >= 0]
+
+print(newList)
+
+onlyOdds = (num for num in range(1, 101) if num % 2 != 0)
+for num in onlyOdds:
+    print(num)
+
+cubesDict: dict = {num: num * num for num in range(12, 16)}
+
+print(cubesDict)
