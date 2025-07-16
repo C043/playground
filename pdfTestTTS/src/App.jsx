@@ -88,16 +88,24 @@ function App() {
     const canvasContainer = document.getElementById("canvas-container");
     canvasContainer.innerHTML = "";
     const sentencesRects = [];
+    let accumulatedHeight = 0;
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
       const page = await pdf.getPage(pageNum);
       const viewport = page.getViewport({ scale });
       const outputScale = window.devicePixelRatio || 1;
+      console.log(outputScale);
 
       const canvas = document.createElement("canvas");
       canvasContainer.appendChild(canvas);
+
+      const canvasYOffset = accumulatedHeight;
+
       const context = canvas.getContext("2d");
       canvas.width = Math.floor(viewport.width * outputScale);
       canvas.height = Math.floor(viewport.height * outputScale);
+
+      accumulatedHeight += canvas.height;
+
       canvas.style.width = Math.floor(viewport.width) + "px";
       canvas.style.height = Math.floor(viewport.height) + "px";
       const transform =
@@ -136,11 +144,12 @@ function App() {
           const h = textItem.height * outputScale * scale;
           const w = textItem.width * outputScale * scale;
 
+          console.log(y);
           sentenceRects.push({
-            x: x + 25,
-            y: y - textItem.height / scale,
+            x: x + 40,
+            y: canvasYOffset + (y - h),
             w: textItem.width * scale,
-            h: textItem.height,
+            h: textItem.height * scale,
             text: sentence.text,
             page: pageNum,
           });
