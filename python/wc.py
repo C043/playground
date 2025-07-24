@@ -28,6 +28,7 @@ def main():
     words: int = 0
     chars: int = 0
     longest: int = 0
+
     with args.input as file:
         for line in file:
             lineWords = len(line.split())
@@ -39,20 +40,21 @@ def main():
             if longest < lineWords:
                 longest = lineWords
 
-    if len(sys.argv) == 3 and args.input:
-        print(f"Lines: {lines}")
-        print(f"Words: {words}")
-        print(f"Chars: {chars}")
-        print(f"Longest line: {longest}")
+    defaultArgs = any(
+        [getattr(args, _) for _ in ("chars", "words", "lines", "longest")]
+    )
+
+    if not defaultArgs:
+        args.chars = args.lines = args.words = True
 
     if args.lines:
-        print(f"Lines: {lines}")
+        print(f"Lines: {lines:4}")
     if args.words:
-        print(f"Words: {words}")
+        print(f"Words: {words:4}")
     if args.chars:
-        print(f"Chars: {chars}")
+        print(f"Chars: {chars:4}")
     if args.longest:
-        print(f"Longest line: {longest}")
+        print(f"Longest line: {longest:4}")
 
 
 if __name__ == "__main__":
