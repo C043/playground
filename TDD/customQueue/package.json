@@ -1,0 +1,17 @@
+{
+  "name": "customqueue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "mocha": "^11.7.1",
+    "sinon": "^21.0.0"
+  }
+}
