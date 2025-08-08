@@ -11,3 +11,7 @@ except:
     print("There was an error")
 else:
     print(f"The result was {division}")
+
+print("Type a number different from Zero")
+num = float(input())
+assert num != 0, "Number is zero"
