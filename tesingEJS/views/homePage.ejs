@@ -1,6 +1,6 @@
-<h1>Home Page</h1>
+<h1 class="text-3xl font-bold underline">Home Page</h1>
 <p>Testing things out!</p>
-<button type="button" id="post-button">POST BUTTON</button>
+<button type="button" class="text-amber-400" id="post-button">POST BUTTON</button>
 <script>
     document.getElementById("post-button").addEventListener("click",()=>{
         fetch("/api/trigger-action", {method:"POST"})

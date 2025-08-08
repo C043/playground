@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><%= title %></title>
+        <link href="/css/styles.css" rel="stylesheet" />
     </head>
-    <body>
-        <%- body %>
+    <body class="dark:bg-[#10141E]">
+        <div class="container m-auto mt-10 dark:text-[#DFE5ED]">
+            <%- body %>
+        </div>
     </body>
 </html>
