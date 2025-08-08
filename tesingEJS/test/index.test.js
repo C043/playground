@@ -13,6 +13,9 @@ const __dirname = dirname(__filename)
 
 const targetFile = path.resolve(__dirname, "../views/homePage.ejs")
 
+// TODO - modal opening test
+// TODO - server side rendered list filtering test
+
 // User admin
 ejs.renderFile(
   targetFile,
