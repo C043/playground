@@ -15,3 +15,16 @@ else:
 print("Type a number different from Zero")
 num = float(input())
 assert num != 0, "Number is zero"
+
+
+class ValueTooLarge(Exception):
+    pass
+
+
+try:
+    print("Give me a less than 1000 number")
+    num = float(input())
+    if num > 1000:
+        raise ValueTooLarge
+except ValueTooLarge:
+    print("Value more than 1000")
