@@ -5,6 +5,9 @@
 <% if (user.isAdmin) {%>
     <p id="admin-welcome-message">Welcome, admin</p>
 <% } %>
+<div>
+    <%- include("./templates/modal.ejs") %>
+</div>
 <script>
     document.getElementById("post-button").addEventListener("click",()=>{
         fetch("/api/trigger-action", {method:"POST"})

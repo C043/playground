@@ -22,13 +22,13 @@ ejs.renderFile(
   {
     jsGlobals: {
       user: {
-        isAdmin: true
+        isAdmin: false
       }
     }
   },
   function (err, str) {
     if (str) {
-      describe("Home Page", () => {
+      describe("Home Page: user not admin", () => {
         let dom
         let body
         let fetchStub
@@ -51,6 +51,10 @@ ejs.renderFile(
           assert.equal(body.querySelector("h1").textContent, "Home Page")
         })
 
+        it("should not render specific text if user is not admin", () => {
+          assert.ok(!body.querySelector("#admin-welcome-message"))
+        })
+
         it("Button should be present and call fetch with correct URL on button click", async () => {
           const button = body.querySelector("#post-button")
 
@@ -70,11 +74,18 @@ ejs.renderFile(
           )
         })
 
-        it("should show a specific text if user is admin", () => {
-          assert.equal(
-            body.querySelector("#admin-welcome-message").textContent,
-            "Welcome, admin"
-          )
+        it("Should show modal if correct button is clicked", async () => {
+          const dialog = body.querySelector("#dialog")
+          const openBtn = body.querySelector("#open-dialog")
+
+          assert.ok(openBtn)
+          assert.ok(dialog)
+
+          assert.ok(openBtn.hasAttribute("command"))
+          assert.equal(openBtn.getAttribute("command"), "show-modal")
+
+          assert.ok(openBtn.hasAttribute("commandFor"))
+          assert.equal(openBtn.getAttribute("commandFor"), "dialog")
         })
       })
     } else {
@@ -89,7 +100,7 @@ ejs.renderFile(
   {
     jsGlobals: {
       user: {
-        isAdmin: false
+        isAdmin: true
       }
     }
   },
@@ -110,9 +121,13 @@ ejs.renderFile(
 
         fetchStub = sinon.stub(dom.window, "fetch").resolves(new Response("{}"))
       })
-      describe("Home Page", () => {
-        it("should not render specific text if user is not admin", () => {
-          assert.ok(!body.querySelector("#admin-welcome-message"))
+
+      describe("Home Page: user admin", () => {
+        it("should show a specific text if user is admin", () => {
+          assert.equal(
+            body.querySelector("#admin-welcome-message").textContent,
+            "Welcome, admin"
+          )
         })
       })
     } else {
