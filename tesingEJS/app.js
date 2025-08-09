@@ -23,3 +23,5 @@ httpServer.timeout = 30000
 httpServer.listen(expressPort, () => {
   console.log(`EXPRESS STARTED - Listening to http://localhost:${expressPort}`)
 })
+
+export default app

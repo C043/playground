@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "tailwind": "npx @tailwindcss/cli -i ./private/css/styles.css -o ./public/css/styles.css --watch",
-    "test": "mocha"
+    "test": "mocha 'test/**/*.test.js' --timeout 10000"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
     "jsdom": "^26.1.0",
     "mocha": "^11.7.1",
     "nodemon": "^3.1.10",
+    "playwright": "^1.54.2",
     "sinon": "^21.0.0"
   }
 }
