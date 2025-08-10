@@ -1,0 +1,32 @@
+<button id="filter-btn-ai" onclick="filterBlogsByAI" type="button">Filter By AI Tag</button>
+<div id="blogs-container">
+    <% blogList.forEach(blog => { %>
+        <div class="blog-card" >
+            <h1><%= blog.title %></h1>
+            <p><%= blog.tag %></p>
+        </div>
+    <% }) %>
+</div>
+
+<script>
+    const filterBlogsByAI = () =>{
+        const filtered = blogList.filter(blog => blog.tag === "AI")
+        const blogsContainer = document.getElementById("blogs-container")
+
+        filterd.forEach(blog => {
+            const blogCard = document.createElement("div")
+            blogCard.classList.add("blog-card")
+
+            const title = document.createElement("h1")
+            title.innerText = blog.title
+
+            const blogTag = document.createElement("p")
+            blogTag.innerText = blog.tag
+
+            blogCard.appendChild(title)
+            blogCard.appendChild(tag)
+
+            blogsContainer.appendChild(blogCard)
+        })
+    }
+</script>
