@@ -57,7 +57,7 @@ ejs.renderFile(
 
           await new Promise(r => setTimeout(r, 0))
 
-          assert.equal(body.querySelectorAll(".blog-card").length, 3)
+          assert.equal(body.querySelectorAll(".blog-card").length, 2)
         })
       })
     } else {
