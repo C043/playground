@@ -1,28 +1,7 @@
 <script>
-    const blogList = <%- JSON.stringify(blogList) %>
-    function filterBlogsByAI() {
-        const filtered = blogList.filter(blog => blog.tag === "ai")
-        const blogsContainer = document.getElementById("blogs-container")
-        blogsContainer.innerHTML = ""
-
-        filtered.forEach(blog => {
-            const blogCard = document.createElement("div")
-            blogCard.classList.add("blog-card")
-
-            const title = document.createElement("h1")
-            title.innerText = blog.title
-
-            const blogTag = document.createElement("p")
-            blogTag.innerText = blog.tag
-
-            blogCard.appendChild(title)
-            blogCard.appendChild(blogTag)
-
-            blogsContainer.appendChild(blogCard)
-        })
-    }
+    window.blogList = <%- JSON.stringify(blogList) %>
 </script>
-
+<script src="/js/listPage.js"></script>
 <button class="cursor-pointer" id="filter-btn-ai" onclick="filterBlogsByAI()" type="button">Filter By AI Tag</button>
 <div id="blogs-container">
     <% blogList.forEach(blog => { %>

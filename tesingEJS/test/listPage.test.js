@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom"
+import fs from "fs"
 import ejs from "ejs"
 import { dirname } from "path"
 import path from "path"
@@ -38,9 +39,15 @@ ejs.renderFile(
         beforeEach(() => {
           dom = new JSDOM(str, {
             runScripts: "dangerously",
-            resources: "usable"
+            resources: "usable",
+            url: "http://localhost:3000"
           })
           body = dom.window.document.body
+
+          // Load the browser JS file manually into the JSDOM window
+          const scriptPath = path.resolve("./public/js/listPage.js")
+          const scriptContent = fs.readFileSync(scriptPath, "utf8")
+          dom.window.eval(scriptContent)
         })
 
         it("should render all blogs", () => {
