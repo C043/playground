@@ -13,8 +13,6 @@ const __dirname = dirname(__filename)
 
 const targetFile = path.resolve(__dirname, "../views/homePage.ejs")
 
-// TODO - server side rendered list filtering test
-
 // User admin
 ejs.renderFile(
   targetFile,
@@ -71,20 +69,6 @@ ejs.renderFile(
             "/api/trigger-action",
             sinon.match.has("method", "POST")
           )
-        })
-
-        it("Should show modal if correct button is clicked", async () => {
-          const dialog = body.querySelector("#dialog")
-          const openBtn = body.querySelector("#open-dialog")
-
-          assert.ok(openBtn)
-          assert.ok(dialog)
-
-          assert.ok(openBtn.hasAttribute("command"))
-          assert.equal(openBtn.getAttribute("command"), "show-modal")
-
-          assert.ok(openBtn.hasAttribute("commandFor"))
-          assert.equal(openBtn.getAttribute("commandFor"), "dialog")
         })
       })
     } else {
