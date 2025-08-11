@@ -52,7 +52,7 @@ ejs.renderFile(
           assert.ok(!body.querySelector("#admin-welcome-message"))
         })
 
-        it("Button should be present and call fetch with correct URL on button click", async () => {
+        it("Button should be present and call fetch with correct URL, headers, and body on button click", async () => {
           const button = body.querySelector("#post-button")
 
           assert.ok(button, "Expected button to exist")
