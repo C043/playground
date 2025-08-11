@@ -54,7 +54,7 @@ ejs.renderFile(
           assert.equal(body.querySelectorAll(".blog-card").length, 3)
         })
 
-        it("should only render ai blog cards when clicking the blog filter by ai button", async () => {
+        it("should render just ai blog cards when clicking the blog filter by ai button", async () => {
           const filterBtn = body.querySelector("#filter-btn-ai")
           assert.ok(filterBtn)
 
