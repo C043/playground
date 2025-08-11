@@ -11,6 +11,15 @@
 </div>
 <script>
     document.getElementById("post-button").addEventListener("click",()=>{
-        fetch("/api/trigger-action", {method:"POST"})
+        fetch("/api/trigger-action", {
+            method:"POST",
+            headers: {
+                Authorization: `Bearer token`,
+            },
+            body: JSON.stringify({
+                name: "Mario",
+                email: "example@gmail.com"
+            })
+        })
     })
 </script>

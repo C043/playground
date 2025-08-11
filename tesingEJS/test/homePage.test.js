@@ -67,7 +67,14 @@ ejs.renderFile(
           sinon.assert.calledWith(
             fetchStub,
             "/api/trigger-action",
-            sinon.match.has("method", "POST")
+            sinon.match({
+              method: "POST",
+              headers: { Authorization: "Bearer token" },
+              body: JSON.stringify({
+                name: "Mario",
+                email: "example@gmail.com"
+              })
+            })
           )
         })
       })
