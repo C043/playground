@@ -4,20 +4,28 @@
  * @return {number}
  */
 var climbStairs = function (n) {
-  let result = 1
+  const results = {}
 
-  // Three ways you can climb in total:
-  // 1. One step at a time (This can always be done)
-  // 2. Two steps (This can always be done if n % 2 === 0)
-  if (n % 2 === 0) result++
+  function recursiveClimb(n) {
+    if (n <= 1) return 1
+    let oneStep = null
+    let twoSteps = null
+    if (results[n - 1]) {
+      oneStep = results[n - 1]
+    } else {
+      results[n - 1] = recursiveClimb(n - 1)
+      oneStep = results[n - 1]
+    }
+    if (results[n - 2]) {
+      twoSteps = results[n - 2]
+    } else {
+      results[n - 2] = recursiveClimb(n - 2)
+      twoSteps = results[n - 2]
+    }
+    if (n > 1) return oneStep + twoSteps
+  }
 
-  // 3. One step and Two steps
-  // 4. Two steps and One step
-  // The last ones can be done if one of them can be done
-  if (n % 2 != 0 && n > 1) result = result + 2
-
-  return result
+  return recursiveClimb(n)
 }
 // @leet end
-
-console.log(climbStairs(45))
+console.log(climbStairs(44))
