@@ -54,9 +54,9 @@ var postOrderTraversal = function (root) {
   const visited = []
   function traverse(node) {
     if (node === null) return
-    visited.push(node.val)
     if (node.left) traverse(node.left)
     if (node.right) traverse(node.right)
+    visited.push(node.val)
   }
   traverse(root)
   return visited
