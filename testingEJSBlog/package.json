@@ -1,0 +1,32 @@
+{
+  "name": "tesingejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "tailwind": "npx @tailwindcss/cli -i ./private/css/styles.css -o ./public/css/styles.css --watch",
+    "test": "mocha 'test/**/*.test.js' --timeout 10000 --exit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindplus/elements": "^1.0.7",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "tailwindcss": "^4.1.11",
+    "undici": "^7.13.0"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0",
+    "mocha": "^11.7.1",
+    "nodemon": "^3.1.10",
+    "playwright": "^1.54.2",
+    "sinon": "^21.0.0"
+  }
+}
