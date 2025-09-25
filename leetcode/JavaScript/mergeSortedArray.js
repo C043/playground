@@ -13,11 +13,11 @@ var merge = function (nums1, m, nums2, n) {
   }
 
   nums1.push(...nums2)
-  nums1.sort()
+  nums1.sort((a, b) => a - b)
 }
 // @leet end
 
-const nums1 = [2, 0]
-const nums2 = [1]
+const nums1 = [-10, 2, 0]
+const nums2 = [-1, 1]
 merge(nums1, nums1.length - nums2.length, nums2, nums2.length)
 console.log(nums1)
