@@ -57,3 +57,21 @@ toDoList.count > 0
 toDoList.reverse()
 print(toDoList)
 toDoList.shuffle()
+
+// Gold Challenge
+var taskList = ["Take out the trash", "Learn Swift", "Buy gift"]
+let indexOfTask = taskList.firstIndex(of: "Take out the trash")
+var indexOfNextTask: Int?
+var nextTask: String?
+print(type(of: indexOfTask))
+
+// Unwrapping
+if let index = indexOfTask, taskList.count >= index + 2{
+    indexOfNextTask = index + 2
+    nextTask = taskList[index + 2]
+} else {
+    nextTask = nextTask ?? "No next task"
+}
+
+print(nextTask!)
+
