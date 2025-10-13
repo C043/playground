@@ -1,6 +1,6 @@
 import Cocoa
 
-let volunteerCounts = [1,3,40,32,2,53,77,13]
+var volunteerCounts = [1,3,40,32,2,53,77,13]
 
 func isAscending(_ i: Int, _ j: Int) -> Bool {
     return i < j
@@ -25,7 +25,7 @@ volunteersSorted = volunteerCounts.sorted {$0 < $1}
 print(volunteersSorted)
 
 // Building a function that takes a closure as parameter
-func format(numbers: [Double], using formatter: (Double) -> String = {"\($0)"}) -> [String] {
+func format(numbers: [Double], using formatter: (Double) -> String) -> [String] {
     var result = [String]()
     
     for number in numbers {
@@ -43,3 +43,11 @@ let rounder: (Double) -> String = {
 
 let volunteerAvarages = [10.75, 4.2, 1.5, 12.12, 16.815]
 let roundedAvaragesAsStrings = format(numbers: volunteerAvarages, using: rounder)
+
+// Bronze challenge
+volunteerCounts.sort(by: isAscending)
+print(volunteerCounts)
+
+// Silver Challenge
+volunteerCounts.sort()
+print(volunteerCounts)
