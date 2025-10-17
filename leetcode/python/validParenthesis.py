@@ -7,32 +7,19 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        splitted = list(s)
+        stack = []
+        pairs = {")": "(", "]": "[", "}": "{"}
 
-        if len(splitted) <= 1:
-            return False
-
-        opened = []
-
-        for char in splitted:
-            if char == "{" or char == "[" or char == "(":
-                opened.append(char)
-            else:
-                if len(opened) == 0:
+        for i in s:
+            if i in pairs.values():
+                stack.append(i)
+            elif i in pairs:
+                if not stack or stack[-1] != pairs[i]:
                     return False
 
-                lastOpened = opened.pop()
-                if char == "}" and lastOpened != "{":
-                    return False
-                elif char == "]" and lastOpened != "[":
-                    return False
-                elif char == ")" and lastOpened != "(":
-                    return False
+                stack.pop()
 
-        if len(opened) > 0:
-            return False
-
-        return True
+        return len(stack) == 0
 
 
 solution = Solution()
