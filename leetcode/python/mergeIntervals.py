@@ -7,13 +7,15 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
         """
-        # Sort the intervals by their starting point (decide if in place or returning a new list)
-        sortedIntervals = sorted(intervals, key=lambda x: x[0])
+        if not intervals:
+            return []
+
+        intervals.sort(key=lambda x: x[0])
 
         solution = []
-        currentInterval = sortedIntervals[0]
+        currentInterval = intervals[0]
 
-        for interval in sortedIntervals[1:]:
+        for interval in intervals[1:]:
             intervalStartingPoint = interval[0]
             intervalEndingPoint = interval[1]
 
@@ -21,7 +23,6 @@ class Solution(object):
                 intervalStartingPoint <= currentInterval[1]
                 and intervalStartingPoint >= currentInterval[0]
             ):
-                # merge
                 currentInterval[1] = max(intervalEndingPoint, currentInterval[1])
             else:
                 solution.append(currentInterval)
@@ -35,3 +36,8 @@ class Solution(object):
 
 solution = Solution()
 print(solution.merge([[2, 3], [1, 4], [7, 14], [5, 10]]))
+
+"""
+This implementation is O(n) space complexity because we save another list that possibly contains the same input elements. 
+Even if we loop over the input just once, we sort it in place which is O(n log n)
+"""
