@@ -1,9 +1,8 @@
 # @leet start
-from typing import List
 
 
 class Solution(object):
-    def merge(self, intervals: List[List[int]]):
+    def merge(self, intervals):
         """
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
@@ -12,7 +11,7 @@ class Solution(object):
         sortedIntervals = sorted(intervals, key=lambda x: x[0])
 
         solution = []
-        currentInterval: List[int] = sortedIntervals[0]
+        currentInterval = sortedIntervals[0]
 
         for interval in sortedIntervals[1:]:
             intervalStartingPoint = interval[0]
