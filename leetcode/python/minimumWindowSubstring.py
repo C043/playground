@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class Solution(object):
     def minWindow(self, s, t):
         """
@@ -5,40 +8,49 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        # If s length < t length return ""
-        if len(s) < len(t):
+        if not t or len(s) < len(t):
             return ""
-        # If s length = 1 and t length = 1 and they have the same char, return that char
-        elif len(s) == 1 and len(t) == 1 and s[0] == t[0]:
-            return s[0]
 
-        # Initiate the frequency map for t
-        targetFrequencyMap = {}
-        # Initizte the target length
-        currentWindowCounter = len(t)
-
-        # Popolate the frequency map looping t
+        targetFreqMap = defaultdict(int)
         for char in t:
-            targetFrequencyMap.setdefault(char, 0)
-            targetFrequencyMap[char] = targetFrequencyMap[char] + 1
+            targetFreqMap[char] += 1
 
-        # Initiate the current window frequency map for s
-        currentWindowFrequencyMap = {}
+        windowMap = defaultdict(int)
+        required = len(targetFreqMap)
+        formed = 0
 
-        # Initiate the two window pointers
+        minLen = float("inf")
+        bestLeft = 0
+        bestRight = 0
+
         left = 0
-        right = 0
 
-        # Initiate the minimum window substring to ""
-        minSubstring = ""
-        # Initiate the current window substring to ""
-        currentWindowSubstring = ""
+        for right, char in enumerate(s):
+            windowMap[char] += 1
 
-        # Loop through s with the window once
-        for chars in s:
-            s[right]
-        # Return the minimum substring
+            if char in targetFreqMap and windowMap[char] == targetFreqMap[char]:
+                formed += 1
+
+            while formed == required:
+                if right - left + 1 < minLen:
+                    minLen = right - left + 1
+                    bestLeft = left
+                    bestRight = right
+
+                drop = s[left]
+                print(drop)
+                windowMap[drop] -= 1
+                if drop in targetFreqMap and windowMap[drop] < targetFreqMap[drop]:
+                    formed -= 1
+
+                left += 1
+
+        if minLen == float("inf"):
+            return ""
+
+        return s[bestLeft : bestRight + 1]
 
 
 solution = Solution()
 print(solution.minWindow("ADOBECODEBANC", "ABC"))
+# print(solution.minWindow("A", "A"))
