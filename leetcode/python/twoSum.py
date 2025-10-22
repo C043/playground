@@ -1,4 +1,5 @@
 # @leet start
+# Brute force implementation
 class Solution(object):
     def twoSum(self, nums, target):
         """
@@ -16,6 +17,7 @@ class Solution(object):
 
 
 # @leet start
+# Hashmap for O(1) lookup
 class SolutionOptimized(object):
     def twoSum(self, nums, target):
         """
