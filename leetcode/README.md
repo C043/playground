@@ -7,7 +7,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ## 🟩 Hashmap Pattern
 
-### 🔹 Two Sum
+### 🔹 [Two Sum](./python/twoSum.py)
 - **When to use:** You need to find pairs, complements, or detect previous occurrences efficiently.
 - **Key idea:** Store needed information (e.g., target - num) in a hashmap for O(1) lookup.
 - **Common problems:** 
@@ -15,7 +15,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
   - Subarray Sum Equals K
   - Contains Duplicate
 
-### 🔹 Group Anagrams
+### 🔹 [Group Anagrams](./python/groupAnagrams.py)
 - **When to use:** You need to group or categorize items that share a common "signature".
 - **Key idea:** Use a hashmap keyed by a normalized version of each item (e.g., sorted string).
 - **Common problems:** 
@@ -27,7 +27,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ## 🟨 Stack Pattern
 
-### 🔹 Valid Parentheses
+### 🔹 [Valid Parentheses](./python/validParenthesis.py)
 - **When to use:** You need to validate nested structures or track "opening" and "closing" relationships.
 - **Key idea:** Push opening elements; pop when a matching closing appears.
 - **Common problems:** 
@@ -39,7 +39,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ## 🟦 Sorting + Interval Pattern
 
-### 🔹 Merge Intervals
+### 🔹 [Merge Intervals](./python/mergeIntervals.py)
 - **When to use:** You’re dealing with overlapping ranges or schedules.
 - **Key idea:** Sort by start time, then merge overlapping intervals.
 - **Common problems:** 
@@ -51,7 +51,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ## 🟧 Sliding Window Pattern
 
-### 🔹 Longest Substring Without Repeating Characters
+### 🔹 [Longest Substring Without Repeating Characters](./python/longestSubstringWithoutRepeatingCharacters.py)
 - **When to use:** You need to find the longest or shortest subarray/string that satisfies a condition.
 - **Key idea:** Expand the window to include valid elements; shrink when invalid.
 - **Common problems:** 
@@ -59,7 +59,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
   - Longest Subarray with K Distinct
   - Max Consecutive Ones III
 
-### 🔹 Minimum Window Substring
+### 🔹 [Minimum Window Substring](./python/minimumWindowSubstring.py)
 - **When to use:** You need a minimal range that contains all required elements.
 - **Key idea:** Maintain a frequency map, expand and shrink dynamically.
 - **Common problems:** 
@@ -71,7 +71,7 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ## 🟥 Heap Pattern
 
-### 🔹 Top K Frequent Elements
+### 🔹 [Top K Frequent Elements](./python/topKFrequentElements.py)
 - **When to use:** You need the largest/smallest K elements efficiently.
 - **Key idea:** Maintain a min-heap of size K to discard the least relevant elements as you go.
 - **Common problems:** 
