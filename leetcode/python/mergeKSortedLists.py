@@ -26,7 +26,9 @@ class Solution:
                 else:
                     current = None
 
-        print(minHeap)
+        if not minHeap:
+            return
+
         firstNode = ListNode(heapq.heappop(minHeap), None)
         currentNode = firstNode
 
@@ -47,5 +49,10 @@ solution = Solution()
 print(solution.mergeKLists([linkedList, linkedList2, linkedList3]))
 
 """
-TODO: Reflect on this problem and find the pattern.
+This implementation is O(n log n) time complexity because we have push and pop from the heap which is O(log n)
+This implementation is O(n) space complexity because we keep a heap of lenght equal to all the values in the nodes
+
+The implementation is fairly simple:
+- We loop over all the nodes in all the linked lists just once and we push their values into the min heap
+- Then we create a new linked list by popping the values from the min heap and we return the first node
 """
