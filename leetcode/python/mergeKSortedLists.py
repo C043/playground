@@ -45,3 +45,7 @@ linkedList3 = ListNode(2, ListNode(6))
 
 solution = Solution()
 print(solution.mergeKLists([linkedList, linkedList2, linkedList3]))
+
+"""
+TODO: Reflect on this problem and find the pattern.
+"""
