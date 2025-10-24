@@ -13,6 +13,29 @@ class ListNode:
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         minHeap = []
+
+        # Seed the heap with the first node from each list (keeping heap size at k).
+        for idx, node in enumerate(lists):
+            if node:
+                heapq.heappush(minHeap, (node.val, idx, node))
+
+        dummy = ListNode()
+        tail = dummy
+
+        while minHeap:
+            _, idx, node = heapq.heappop(minHeap)
+            tail.next = node
+            tail = tail.next
+
+            if node.next:
+                heapq.heappush(minHeap, (node.next.val, idx, node.next))
+
+        return dummy.next
+
+    def oNLogNImplementation(
+        self, lists: List[Optional[ListNode]]
+    ) -> Optional[ListNode]:
+        minHeap = []
         current = None
 
         # Loop all the linked lists and populate the minHeap
@@ -49,10 +72,10 @@ solution = Solution()
 print(solution.mergeKLists([linkedList, linkedList2, linkedList3]))
 
 """
-This implementation is O(n log n) time complexity because we have push and pop from the heap which is O(log n)
-This implementation is O(n) space complexity because we keep a heap of lenght equal to all the values in the nodes
+This implementation is O(n log k) time complexity because each of the n nodes is pushed/popped from a heap of size k.
+This implementation is O(k) space complexity because the heap stores at most one node per list.
 
 The implementation is fairly simple:
-- We loop over all the nodes in all the linked lists just once and we push their values into the min heap
-- Then we create a new linked list by popping the values from the min heap and we return the first node
+- We push the head node from each list into the min heap (keeping it size k).
+- We repeatedly pop the smallest node, append it to the result, and push that node's successor into the heap.
 """
