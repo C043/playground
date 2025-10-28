@@ -8,12 +8,7 @@
 import Foundation
 
 class Zombie: Monster {
-    override class var spookyNoise: String {
-        return "Brains..."
-    }
-    
     var walskWithLimp = true
-    private(set) var isFallingApart = false
     
     func regenrate() {
         walskWithLimp = false
