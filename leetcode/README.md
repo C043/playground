@@ -67,6 +67,10 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
   - Find All Anagrams in a String
   - Substring with Concatenation of All Words
 
+### [Sort Colors (Dutch flag partition)](./python/sortColors.py)
+- **When to use:** When you need to sort a list based on three macro groups in place
+- **Key idea:** We keep three separated partition and we traverse the middle one. We move the values in the middle partition in the left or right partition based on the macro group.
+
 ---
 
 ## 🟥 Heap Pattern
@@ -79,6 +83,14 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
   - Kth Largest Element in an Array
   - Merge K Sorted Lists
 
+### [Kth Largets Element in an Array](./python/kthLargestElementInAnArray.py)
+- **When to use:** You need the top most k element efficiently like if you need the third max element for example
+- **Key idea:** maintain a min-heap of size K to discard the least relevant elements as you go and return the first element of the heap when the algo looped over the list once
+
+### [Merge K Sorted Lists](./python/mergeKSortedLists.py)
+- **When to use:** You need to merge ordered linked lists
+- **Key idea:** maintain a min-heap of size K pushing the first node of the each linked list only in the heap. While there are still nodes in the the heap, we pop one and we append it to the previous one, then if the node has a next node, we push that node in the heap too. We return the newly created linked list.
+
 ---
 
 ## 🧩 Summary — Pattern Recognition Map
@@ -86,8 +98,11 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 | Problem Type | Pattern | Data Structure | Mental Trigger |
 |---------------|----------|----------------|----------------|
 | Find pairs / complements | Hashmap | Dict | "Need O(1) lookup?" |
+| Group items by signature | Hashmap | Dict of signatures | "Need to bucket anagrams?" |
 | Validate nested structure | Stack | Stack | "Open/close elements?" |
 | Merge or combine ranges | Sort + Merge | Array | "Overlapping intervals?" |
 | Find longest/shortest subarray | Sliding Window | HashMap / Set | "Contiguous segment constraint?" |
+| Cover all required tokens | Sliding Window | HashMap + Counter | "Need smallest window covering target?" |
+| In-place three-way partition | Dutch National Flag | Array + pointers | "Need to reorder three categories?" |
 | Get top or smallest K elements | Heap | Min/Max Heap | "Top / frequent / ranked?" |
-
+| Merge multiple sorted sources | Heap | Min Heap | "Need to merge many sorted feeds?" |
