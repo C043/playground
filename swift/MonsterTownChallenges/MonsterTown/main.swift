@@ -12,6 +12,10 @@ var myTown = Town()
 myTown.changePopulation(by: 2)
 
 let fredTheZombie = Zombie()
-fredTheZombie.town = myTown
-fredTheZombie.terrorizeTown()
-fredTheZombie.town?.printDescription()
+let edwardTheVampire = Vampire()
+edwardTheVampire.town = myTown
+edwardTheVampire.terrorizeTown()
+print(edwardTheVampire.thralls)
+edwardTheVampire.terrorizeTown()
+print(edwardTheVampire.thralls)
+edwardTheVampire.town?.printDescription()
