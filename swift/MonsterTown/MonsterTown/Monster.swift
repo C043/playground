@@ -8,14 +8,28 @@
 import Foundation
 
 class Monster {
+    static let isTerrifying = true
     var town: Town?
     var name = "Monster"
+    var victimPool: Int {
+        get {
+            return town?.population ?? 0
+        }
+        set(newVictimPool) {
+            town?.population = newVictimPool
+        }
+    }
     
     func terrorizeTown() {
         if town != nil {
             print("\(name) is terrorizing a town!")
+            town?.mayor.notify()
         } else {
             print("\(name) has not found a town to terrorize yet...")
         }
+    }
+    
+    class var spookyNoise: String {
+        return "Grrr"
     }
 }
