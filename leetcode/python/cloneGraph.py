@@ -53,6 +53,19 @@ forth.neighbors.append(third)
 solution.cloneGraph(root)
 
 """
-This implementation is O(n) time complexity
-This implementation is O(n2) space complexity
+This implementation is O(n + e) time complexity where n are the nodes and e are the edges. In the worst case it's O(n2) because the two numbers could be equal
+This is because we loop over every node, but for each node we loop over every neighbor too.
+
+This implementation is O(n + e) space complexity because we save each node in the visited set and queue, but we keep saving the neighbors in the clone nodes too. This too can be O(n2) in the worst case because the nodes and edges could be equal.
+
+We initialize a map where the key are the original nodes and the values are the clones
+We initialize a visited set where we'll put all the nodes we visit
+We Initialize a queue with the root of the graph inside
+
+We loop until the queue is empty
+We pop from the queue
+We add the node we just popped to the visited set and we create a default entry in the map
+For each of its neighbors, we create a default entry in the map and we append it to the neighbors of the clone of the current node
+If the neighbor is not in visited, we add it to the queue and to the visited. This way we're not revisiting nodes
+We return the root clone
 """
