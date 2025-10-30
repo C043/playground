@@ -91,6 +91,42 @@ class Solution:
 
         return islandCounter
 
+    def numIslandsDFSRecursive(self, grid: List[List[str]]) -> int:
+        islandCounter = 0
+
+        visited = set()
+
+        def explore(
+            grid: List[List[str]], x: int, y: int, visited: set[tuple[(int, int)]]
+        ):
+            if x < 0 or x >= len(grid[0]):
+                return
+            if y < 0 or y >= len(grid):
+                return
+            if (x, y) in visited:
+                return
+            if grid[y][x] == "0":
+                return
+
+            visited.add((x, y))
+            explore(grid, x + 1, y, visited)
+            explore(grid, x - 1, y, visited)
+            explore(grid, x, y + 1, visited)
+            explore(grid, x, y - 1, visited)
+
+        for y, line in enumerate(grid):
+            for x, cell in enumerate(line):
+                if (x, y) in visited:
+                    continue
+
+                if cell == "1":
+                    islandCounter += 1
+                    explore(grid, x, y, visited)
+
+                visited.add((x, y))
+
+        return islandCounter
+
 
 grid = [
     ["1", "1", "1", "1", "0"],
@@ -107,9 +143,12 @@ grid = [
 ]
 
 solution = Solution()
-print(solution.numIslandsDFS(grid))
+print(solution.numIslandsDFSRecursive(grid))
 
 """
+The time complexity is O(n) because we look through all the cells just once.
+The space complexity is O(n) because we just keep track of the visited cells in the set.
+
 In this implementation of graph traversal, we create a counter to return in the end representing the number of islands in the grid.
 We initialize a visited set to mark the visited cells in the grid.
 We initialize a queue.
@@ -120,4 +159,8 @@ After that we keep iterating until we find another 1 not visited. That means we 
 When we iterated all the cells, we return the counter.
 
 In the first DFS implementation, we just replace the queue with a stack to change the order in which we explore the islands.
+
+In the second DFS implementation, we use recursion to make the code much cleaner.
+Instead of manually check for the island neighbors, we use a recursive helper function that calls itself on the cell neighbors and add them on the visited set if they are islands too.
+It returns early if the cell is out of bounds or if it's not an island or if the cell is already visited.
 """
