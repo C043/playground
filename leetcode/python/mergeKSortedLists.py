@@ -42,7 +42,6 @@ class Solution:
         for list in lists:
             current = list
             while current:
-                print(current.val)
                 heapq.heappush(minHeap, current.val)
                 if current.next:
                     current = current.next
