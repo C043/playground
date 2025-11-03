@@ -31,11 +31,7 @@ class Zombie: Monster {
     ) {
         walksWithLimp = limp
         isFallingApart = fallingApart
-        if monsterName == "" {
-            return nil
-        } else {
-            super.init(town: town, monsterName: monsterName)
-        }
+        super.init(town: town, monsterName: monsterName)
     }
 
     convenience init?(limp: Bool, fallingApart: Bool) {
