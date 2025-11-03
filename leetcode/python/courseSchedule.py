@@ -80,33 +80,40 @@ class Solution:
         return True
 
     def canFinishKahn(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        inDegree: Dict[int, int] = {i: 0 for i in range(numCourses)}
+        # We create two maps: one to count how many deps a course has where the key is the course and the value is the int
+        # One to have the list of deps for a specified course: course as a key and set as value
+        depCountMap: Dict[int, int] = {i: 0 for i in range(numCourses)}
         adjList: Dict[int, Set[int]] = {i: set() for i in range(numCourses)}
 
+        # For every course and prerequisite, add one to the count of the course and add course to the list of dependencies of the dependency
         for course, prerequisite in prerequisites:
-            inDegree[course] += 1
+            depCountMap[course] += 1
             adjList[prerequisite].add(course)
 
-        done: Set[int] = set()
+        doneCounter = 0
         queue: deque[int] = deque()
 
-        for course, depCount in inDegree.items():
+        # We add to the queue all the courses that have 0 deps
+        for course, depCount in depCountMap.items():
             if depCount == 0:
                 queue.append(course)
 
         if not queue:
             return False
 
+        # While there are courses in the queue with 0 deps, we pop one and we add one to the done counter
         while queue:
             course = queue.popleft()
-            done.add(course)
+            doneCounter += 1
 
+            # For every successor in the adjList of the course that we just popped, we remove one from the depCountMap of the successor and if it's 0, we append the successor to the queue since that course has 0 deps now.
             for successor in adjList[course]:
-                inDegree[successor] -= 1
-                if inDegree[successor] == 0:
+                depCountMap[successor] -= 1
+                if depCountMap[successor] == 0:
                     queue.append(successor)
 
-        return len(done) == numCourses
+        # We return true if the doneCounter is equal to the numCourses, otherwise there was a loop and the doneCounter is less than the numCoureses
+        return doneCounter == numCourses
 
 
 solution = Solution()
@@ -124,5 +131,6 @@ The DFS traversal visits all the vertices and edges once. The outer loop runs v 
 
 The space complexity is O(v + e) because we keep in memory all the cources once in the visited set (O(v)). Also we keep in memory the depList which takes O(e) space.
 
-TODO: Reflect on the kahn's algo implementation
+The Kahn's algorithm implementation time and space complexities are the same as the DFS but the Kahn's implementation returns the valid order of tasks while the DFS returns only if a valid order is possible.
+Use Kahn's only if you need that order.
 """
