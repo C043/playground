@@ -32,6 +32,54 @@ class Solution:
 
         return cloneDict[node]
 
+    def cloneGraphDFS(self, node: Optional["Node"]) -> Optional["Node"]:
+        if not node:
+            return
+        elif not node.neighbors:
+            return Node(node.val)
+
+        cloneDict: dict[Node, Node] = {}
+        visited = set()
+        stack: List[Node] = [node]
+
+        while stack:
+            current = stack.pop()
+            cloneDict.setdefault(current, Node(current.val))
+            visited.add(current)
+            for neighbor in current.neighbors:
+                cloneDict.setdefault(neighbor, Node(neighbor.val))
+                cloneDict[current].neighbors.append(cloneDict[neighbor])
+                if neighbor not in visited:
+                    stack.append(neighbor)
+                    visited.add(neighbor)
+
+        return cloneDict[node]
+
+    def cloneGraphDFSRecursive(self, node: Optional["Node"]) -> Optional["Node"]:
+        if not node:
+            return
+        elif not node.neighbors:
+            return Node(node.val)
+
+        cloneDict: dict[Node, Node] = {}
+
+        def explore(node: Optional["Node"], cloneDict: dict[Node, Node]):
+            if not node:
+                return
+            if node in cloneDict:
+                return cloneDict[node]
+
+            clone = Node(node.val)
+            cloneDict[node] = clone
+
+            for neighbor in node.neighbors:
+                clonedNeighbor = explore(neighbor, cloneDict)
+                clone.neighbors.append(clonedNeighbor)
+
+            return clone
+
+        return explore(node, cloneDict)
+
 
 solution = Solution()
 root = Node(1, [])
@@ -68,4 +116,12 @@ We add the node we just popped to the visited set and we create a default entry 
 For each of its neighbors, we create a default entry in the map and we append it to the neighbors of the clone of the current node
 If the neighbor is not in visited, we add it to the queue and to the visited. This way we're not revisiting nodes
 We return the root clone
+
+We implemented the DFS too.
+In the first implementation we use a stack instead of a queue.
+This makes it DFS because it changes the order in which we visit the nodes.
+
+In the second implementation we use recursion to explore.
+We create a clone dict like before. We pass this dict to all the calls to explore to keep track of the visited nodes.
+Every call to explore, it clones the node passed and call the explore to each neighbor, appending the returning clone to the current clone.
 """

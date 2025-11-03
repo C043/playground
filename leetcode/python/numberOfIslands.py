@@ -6,7 +6,6 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         islandCounter = 0
 
-        # Walk the grid cell by cell. Each time you hit a '1' that hasn’t been seen before, that means you’ve discovered a new island. Increment your island counter.
         visited = set()
         queue = deque()
         for y, line in enumerate(grid):
@@ -46,9 +45,85 @@ class Solution:
 
                 visited.add((x, y))
 
-                # From that starting cell, explore all reachable '1' neighbors (up/down/left/right). You can do this with either a stack/recursion (depth‑first) or a queue (breadth‑first).
-                # As you visit cells, mark them so you won’t count them again—either by tracking them in a visited set or by writing over the grid entry.
-                # When that exploration finishes, you’ve completely “flooded out” that island. Continue scanning the grid; each untouched '1' you encounter kicks off the same process.
+        return islandCounter
+
+    def numIslandsDFS(self, grid: List[List[str]]) -> int:
+        islandCounter = 0
+
+        visited = set()
+        stack = []
+        for y, line in enumerate(grid):
+            yBoundary = len(grid)
+            for x, cell in enumerate(line):
+                xBoundary = len(line)
+                if (x, y) in visited:
+                    continue
+
+                if cell == "1":
+                    islandCounter += 1
+                    stack.append((cell, x, y))
+                    visited.add((x, y))
+                    while stack:
+                        cell, cx, cy = stack.pop()
+
+                        if cx + 1 < xBoundary:
+                            right = (grid[cy][cx + 1], cx + 1, cy)
+                            if right[0] == "1" and (right[1], right[2]) not in visited:
+                                stack.append(right)
+                                visited.add((right[1], right[2]))
+                        if cx - 1 >= 0:
+                            left = (grid[cy][cx - 1], cx - 1, cy)
+                            if left[0] == "1" and (left[1], left[2]) not in visited:
+                                stack.append(left)
+                                visited.add((left[1], left[2]))
+                        if cy + 1 < yBoundary:
+                            down = (grid[cy + 1][cx], cx, cy + 1)
+                            if down[0] == "1" and (down[1], down[2]) not in visited:
+                                stack.append(down)
+                                visited.add((down[1], down[2]))
+                        if cy - 1 >= 0:
+                            up = (grid[cy - 1][cx], cx, cy - 1)
+                            if up[0] == "1" and (up[1], up[2]) not in visited:
+                                stack.append(up)
+                                visited.add((up[1], up[2]))
+
+                visited.add((x, y))
+
+        return islandCounter
+
+    def numIslandsDFSRecursive(self, grid: List[List[str]]) -> int:
+        islandCounter = 0
+
+        visited = set()
+
+        def explore(
+            grid: List[List[str]], x: int, y: int, visited: set[tuple[(int, int)]]
+        ):
+            if x < 0 or x >= len(grid[0]):
+                return
+            if y < 0 or y >= len(grid):
+                return
+            if (x, y) in visited:
+                return
+            if grid[y][x] == "0":
+                return
+
+            visited.add((x, y))
+            explore(grid, x + 1, y, visited)
+            explore(grid, x - 1, y, visited)
+            explore(grid, x, y + 1, visited)
+            explore(grid, x, y - 1, visited)
+
+        for y, line in enumerate(grid):
+            for x, cell in enumerate(line):
+                if (x, y) in visited:
+                    continue
+
+                if cell == "1":
+                    islandCounter += 1
+                    explore(grid, x, y, visited)
+
+                visited.add((x, y))
 
         return islandCounter
 
@@ -60,5 +135,32 @@ grid = [
     ["0", "0", "0", "0", "0"],
 ]
 
+grid = [
+    ["1", "1", "0", "0", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "1", "0", "0"],
+    ["0", "0", "0", "1", "1"],
+]
+
 solution = Solution()
-print(solution.numIslands(grid))
+print(solution.numIslandsDFSRecursive(grid))
+
+"""
+The time complexity is O(n) because we look through all the cells just once.
+The space complexity is O(n) because we just keep track of the visited cells in the set.
+
+In this implementation of graph traversal, we create a counter to return in the end representing the number of islands in the grid.
+We initialize a visited set to mark the visited cells in the grid.
+We initialize a queue.
+We loop over each cell using a nested loop and set the boundaries of the grid.
+If we visited the cell, we skip.
+At the first 1 cell that we encounter, we add one to the counter and start checking all its neighbors and its neighbors' neighbors until we find all the 1s.
+After that we keep iterating until we find another 1 not visited. That means we found another island!
+When we iterated all the cells, we return the counter.
+
+In the first DFS implementation, we just replace the queue with a stack to change the order in which we explore the islands.
+
+In the second DFS implementation, we use recursion to make the code much cleaner.
+Instead of manually check for the island neighbors, we use a recursive helper function that calls itself on the cell neighbors and add them on the visited set if they are islands too.
+It returns early if the cell is out of bounds or if it's not an island or if the cell is already visited.
+"""
