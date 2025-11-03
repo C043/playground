@@ -15,11 +15,15 @@ class Zombie: Monster {
     var walksWithLimp: Bool
     private(set) var isFallingApart: Bool
 
-    required init(town: Town?, monsterName: String) {
-        super.init(town: town, monsterName: monsterName)
+    required convenience init?(town: Town?, monsterName: String) {
+        if monsterName == "" {
+            return nil
+        } else {
+            self.init(limp: false, fallingApart: false, town: town, monsterName: monsterName)
+        }
     }
 
-    convenience init(
+    required init?(
         limp: Bool,
         fallingApart: Bool,
         town: Town?,
@@ -27,10 +31,14 @@ class Zombie: Monster {
     ) {
         walksWithLimp = limp
         isFallingApart = fallingApart
-        self.init(town: town, monsterName: monsterName)
+        if monsterName == "" {
+            return nil
+        } else {
+            super.init(town: town, monsterName: monsterName)
+        }
     }
 
-    convenience init(limp: Bool, fallingApart: Bool) {
+    convenience init?(limp: Bool, fallingApart: Bool) {
         self.init(
             limp: limp,
             fallingApart: fallingApart,
@@ -40,12 +48,6 @@ class Zombie: Monster {
         if walksWithLimp {
             print("This zombie has a bad knee.")
         }
-    }
-
-    required init(town: Town?, monsterName: String) {
-        walksWithLimp = false
-        isFallingApart = false
-        super.init(town: town, monsterName: monsterName)
     }
 
     deinit {
