@@ -76,13 +76,19 @@ print(
 
 """
 The main concept of this algorithm is that we trace back from the cells touch the oceans creating two separated sets that contains all the cells in the path from the ocean to the rest of the graph.
-We do this using populating two separated sets and queues with the cells from each border (because those cells surely touch the oceans).
-Then we perform the BFS graph traversal adding to the queue and to the set only the neighbor neighbors cells that are inside the graph constraints, we did not visit yet and that have their height more or equal to the current cell.
+We do this populating two separated sets and queues with the cells from each border (because those cells surely touch the oceans).
+Then we perform the BFS graph traversal adding to the queue and to the set only the neighbors cells that are inside the graph constraints, we did not visit yet and that have their height more or equal to the current cell.
 This ensures that the water can drain through those cells because the current cell is lower than the neighbors.
 
 Once we traversed and populated for both oceans, we return the intersection of the two sets because those cells are the complete paths that the water can traverse to reach both oceans. It's kind of smart!
 
-The time complexity is O(R * C)
-The space complexity is O(R * C)
-TODO: Reflect on this algorithm more
+The time complexity is O(R * C) where r are rows and c are columns. We can say that it's O(n) where n is the total number of cells.
+This is because we visit every cells at most twice.
+Once if the cell can reach the pacific
+Once if the cell can reach the atlantic
+So if every cell can reach both oceans, we visit every cell twice
+
+The space complexity is O(R * C) or O(n) same as time complexity
+This is because we keep two sets that at worst can contain all the cells each (if all the cells can reach both oceans).
+Also the queues can become quite large, but they are gradually emptied.
 """
