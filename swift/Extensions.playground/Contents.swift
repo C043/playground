@@ -83,3 +83,20 @@ currentCar.emptyFuel(by: 0.3)
 currentCar.fuelLevel
 currentCar.fillFuel()
 currentCar.fuelLevel
+
+extension Int {
+    enum EvenOrOdd {
+        case even, odd
+    }
+    var evenOrOdd: EvenOrOdd {
+        switch self % 2 == 0 {
+        case true:
+            return .even
+        default:
+            return .odd
+        }
+    }
+}
+
+let integer: Int = 5
+integer.evenOrOdd
