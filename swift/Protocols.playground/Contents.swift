@@ -64,14 +64,10 @@ struct Person {
     let yearsOfExperience: Int
 }
 
-struct Department: TabularDataSource, CustomStringConvertible{
+struct Department: TabularDataSource {
     let name: String
     var people = [Person]()
     
-    var description: String {
-        return "Department (\(name))"
-    }
-
     init(name: String) {
         self.name = name
     }
@@ -105,6 +101,12 @@ struct Department: TabularDataSource, CustomStringConvertible{
         case 2: return String(person.yearsOfExperience)
         default: fatalError("Invalid column!")
         }
+    }
+}
+
+extension Department: CustomStringConvertible {
+    var description: String {
+        return "Department (\(name))"
     }
 }
 
