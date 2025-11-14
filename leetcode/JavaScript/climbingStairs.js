@@ -6,26 +6,20 @@
 var climbStairs = function (n) {
   const results = {}
 
-  function recursiveClimb(n) {
-    if (n <= 1) return 1
-    let oneStep = null
-    let twoSteps = null
-    if (results[n - 1]) {
-      oneStep = results[n - 1]
-    } else {
-      results[n - 1] = recursiveClimb(n - 1)
-      oneStep = results[n - 1]
+  function recursiveClimb(results, k) {
+    if (k <= 1) return 1
+    if (results[k]) {
+      return results[k]
     }
-    if (results[n - 2]) {
-      twoSteps = results[n - 2]
-    } else {
-      results[n - 2] = recursiveClimb(n - 2)
-      twoSteps = results[n - 2]
-    }
-    if (n > 1) return oneStep + twoSteps
+
+    const result =
+      recursiveClimb(results, k - 1) + recursiveClimb(results, k - 2)
+
+    results[k] = result
+    return result
   }
 
-  return recursiveClimb(n)
+  return recursiveClimb(results, n)
 }
 // @leet end
 console.log(climbStairs(44))
