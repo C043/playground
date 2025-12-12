@@ -165,3 +165,15 @@ struct Restaurant {
 let restaurant = Restaurant()
 let toast = restaurant.makeToast()
 eat(toast)
+
+// Silver Challenge
+func findAll<T: Equatable>(_ array: [T] , _ target: T) -> [Int] {
+    var arrayToReturn: [Int] = []
+    for (idx, int) in array.enumerated(){
+        if int == target {
+            arrayToReturn.append(idx)
+        }
+    }
+    
+    return arrayToReturn
+}
