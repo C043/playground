@@ -167,13 +167,17 @@ let toast = restaurant.makeToast()
 eat(toast)
 
 // Silver Challenge
-func findAll<T: Equatable>(_ array: [T] , _ target: T) -> [Int] {
-    var arrayToReturn: [Int] = []
-    for (idx, int) in array.enumerated(){
-        if int == target {
+// Gold Challenge
+func findAll<C: Collection>(_ collection: C, _ target: C.Element) -> [C.Index] where C.Element: Equatable {
+    var arrayToReturn: [C.Index] = []
+    for idx in collection.indices {
+        let element = collection[idx]
+        if element == target {
             arrayToReturn.append(idx)
         }
     }
     
     return arrayToReturn
 }
+
+print(findAll([5,3,7,3,9], 3))
