@@ -41,6 +41,19 @@ struct Stack<Element>: Sequence {
             self.push(item)
         }
     }
+    
+    // Bronze Challenge
+    func filter(_ criteria: (Element) -> Bool) -> Stack<Element> {
+        var stackToReturn = Stack()
+        
+        for item in items {
+            if criteria(item) == true {
+                stackToReturn.push(item)
+            }
+        }
+        
+        return stackToReturn
+    }
 }
 
 var intStack = Stack<Int>()
