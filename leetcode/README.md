@@ -93,6 +93,50 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 
 ---
 
+## 🟪 Dynamic Programming Pattern
+
+### [Climbing Stairs](./python/climbingStairs.py)
+- **When to use:** You need to count ways to reach a target with small step options.
+- **Key idea:** Build the answer from smaller subproblems (ways to reach step i depend on i-1 and i-2).
+- **Common problems:** 
+  - Climbing Stairs
+  - Min Cost Climbing Stairs
+  - Fibonacci Number
+
+### [House Robber](./python/houseRobber.py)
+- **When to use:** You need the maximum sum without taking adjacent elements.
+- **Key idea:** Track the best result including/excluding the current element.
+- **Common problems:** 
+  - House Robber
+  - House Robber II
+  - Delete and Earn
+
+### [Coin Change](./python/coinChange.py)
+- **When to use:** You need the minimum number of items to reach a target sum.
+- **Key idea:** Use a DP array where `dp[i]` is the fewest coins to make amount i.
+- **Common problems:** 
+  - Coin Change
+  - Perfect Squares
+  - Minimum Cost For Tickets
+
+### [Edit Distance](./python/editDistance.py)
+- **When to use:** You need the minimum edits to transform one string into another.
+- **Key idea:** 2D DP where `dp[i][j]` is the edit distance for prefixes of the two strings.
+- **Common problems:** 
+  - Edit Distance
+  - Longest Common Subsequence
+  - Delete Operation for Two Strings
+
+### [Longest Increasing Subsequence](./python/longestIncreasingSubsequence.py)
+- **When to use:** You need the longest strictly increasing subsequence.
+- **Key idea:** DP where `dp[i]` is the LIS ending at i (or use binary search for O(n log n)).
+- **Common problems:** 
+  - Longest Increasing Subsequence
+  - Russian Doll Envelopes
+  - Maximum Length of Pair Chain
+
+---
+
 ## 🌍 Graph & Traversal Patterns
 
 ### [Number of Islands](./python/numberOfIslands.py)
@@ -146,6 +190,11 @@ Use it as a mental map: when you see a problem, connect it to one of these strat
 | In-place three-way partition | Dutch National Flag | Array + pointers | "Need to reorder three categories?" |
 | Get top or smallest K elements | Heap | Min/Max Heap | "Top / frequent / ranked?" |
 | Merge multiple sorted sources | Heap | Min Heap | "Need to merge many sorted feeds?" |
+| Count ways to reach a target | Dynamic Programming | Array | "Small step options?" |
+| Max sum without adjacent elements | Dynamic Programming | Array | "Pick vs skip neighbors?" |
+| Minimum coins for a sum | Dynamic Programming | Array | "Fewest items to reach amount?" |
+| Transform strings with minimum edits | Dynamic Programming | 2D Table | "Edit distance or align prefixes?" |
+| Longest increasing subsequence | Dynamic Programming | Array / Binary Search | "Monotonic subsequence?" |
 | Traverse graph/grid components | Graph Traversal (BFS/DFS) | Queue/Stack, Set | "Explore neighbors? Find connected parts?" |
 | Check for dependency cycles | Topological Sort / DFS | HashMap, Set | "Is there a valid ordering/prerequisite chain?" |
 | Find shortest path (weighted) | Dijkstra's Algorithm | Min Heap, HashMap | "What's the cheapest/fastest route from A to all B?" |
