@@ -32,6 +32,6 @@ Then we do it again, and if the element is higher, we shrink again to eliminate 
 This until we find the right element.
 Or not find it. In that case we return -1.
 
-The space complexity of this algorithm is O(n) because it grows linearly with the length of the input array.
+The space complexity of this algorithm is O(1) because we keep in memory only a couple of variables.
 The time complexity of this algorithm is O(log n) because the loop runs about log2(n) times because we eliminate half array each step.
 """
