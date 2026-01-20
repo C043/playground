@@ -42,4 +42,12 @@ Then we define the backtrack recursive function with base case remaining target 
 Then we start a loop from the starting index that is going to be 0 the first time until we loop over all the candidates list.
 If the candidate is bigger than the remaining target, we break out of the loop because we can stop looking, from there on, the candidates are all too big.
 We append the candidate to the current path and we call the backtrack function again with the current index and the remaining target minus the current candidate and the current path. We do this because we used the first candidate, then we pop from the path.
+We pop to restore the shared path to the exact state it had before the recursive call so the next candidate can be tried cleanly.
+
+We append to choose a candidate
+We recurse to explore all combinations that start with that choice
+We pop to undo that choice so the next iteration starts from the prior state
+
+The time complexity is exponential O(n^(T/s)) with s = smallest candidate n = number of candidates and T = target value
+The space complexity is O(T/s) (recursion dept + path), plus output size
 """
