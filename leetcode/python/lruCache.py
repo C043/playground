@@ -3,41 +3,44 @@ from typing import Dict
 
 class Node:
     def __init__(self, val):
-        self.val = val
-        self.next: Node
-        self.prev: Node
+        self.val: int | None = val
+        self.next: Node | None = None
+        self.prev: Node | None = None
 
 
 class DoublyLinkedList:
     def __init__(self):
         self.size = 0
-        self.head = Node(0)
-        self.tail = self.head
-        self.head.prev = self.tail
-        self.tail.next = self.head
+        self.head = Node(None)
+        self.tail = Node(None)
+        self.tail.prev = self.head
+        self.head.next = self.tail
 
     def add(self, node: Node):
-        current = node
-        self.head.next = current
-        current.prev = self.head
-        self.head = current
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.prev = Node(None)
+        self.head.next = node
         self.size = self.size + 1
-        return self.head
+        return self.head.next
 
     def remove(self, node: Node):
-        next = node.next
-        prev = node.prev
-        next.prev = prev
-        prev.next = next
+        if node.next != None and node.prev != None:
+            next = node.next
+            prev = node.prev
+            prev.next = next
+            next.prev = prev
+            self.size = self.size - 1
         return node
 
     def pop(self):
         if self.size == 0:
-            return -1
+            return
         else:
             current = self.tail
-            self.tail = self.tail.next
-            self.tail.prev = Node(0)
+            self.tail = self.tail.prev
+            self.tail.next = self.tail.next
             self.size = self.size - 1
             return current
 
@@ -61,13 +64,26 @@ class LRUCache:
     def put(self, key: int, value: int) -> None:
         item = self.map.get(key)
         if item:
-            self.dll.remove(item)
-            node = Node(value)
+            node = self.dll.remove(item)
+            node.val = value
             node = self.dll.add(node)
             self.map[key] = node
         else:
             node = Node(value)
             node = self.dll.add(node)
             self.map[key] = node
-            if self.dll.size > self.capacity:
-                self.dll.pop()
+
+        if self.dll.size > self.capacity:
+            self.dll.pop()
+            del self.map[key]
+
+
+cache = LRUCache(2)
+cache.put(1, 2)
+cache.put(3, 5)
+cache.put(6, 9)
+print(cache.get(1))
+print(cache.dll.head.next.val)
+print(cache.dll.tail.prev.val)
+print("----")
+print(cache.dll.size)
