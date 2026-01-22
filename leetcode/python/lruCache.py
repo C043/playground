@@ -2,7 +2,8 @@ from typing import Dict
 
 
 class Node:
-    def __init__(self, val):
+    def __init__(self, key, val):
+        self.key: int | None = key
         self.val: int | None = val
         self.next: Node | None = None
         self.prev: Node | None = None
@@ -11,8 +12,8 @@ class Node:
 class DoublyLinkedList:
     def __init__(self):
         self.size = 0
-        self.head = Node(None)
-        self.tail = Node(None)
+        self.head = Node(None, None)
+        self.tail = Node(None, None)
         self.tail.prev = self.head
         self.head.next = self.tail
 
@@ -20,7 +21,6 @@ class DoublyLinkedList:
         node.next = self.head.next
         node.prev = self.head
         self.head.next.prev = node
-        self.head.prev = Node(None)
         self.head.next = node
         self.size = self.size + 1
         return self.head.next
@@ -38,11 +38,11 @@ class DoublyLinkedList:
         if self.size == 0:
             return
         else:
-            current = self.tail
-            self.tail = self.tail.prev
-            self.tail.next = self.tail.next
+            popped = self.tail.prev
+            self.tail.prev.prev.next = self.tail
+            self.tail.prev = self.tail.prev.prev
             self.size = self.size - 1
-            return current
+            return popped.key
 
 
 class LRUCache:
@@ -69,13 +69,13 @@ class LRUCache:
             node = self.dll.add(node)
             self.map[key] = node
         else:
-            node = Node(value)
+            node = Node(key, value)
             node = self.dll.add(node)
             self.map[key] = node
 
         if self.dll.size > self.capacity:
-            self.dll.pop()
-            del self.map[key]
+            keyToRemove = self.dll.pop()
+            del self.map[keyToRemove]
 
 
 cache = LRUCache(2)
