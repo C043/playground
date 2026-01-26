@@ -14,6 +14,7 @@ class DoublyLinkedList:
         self.size = 0
         self.head = Node(None, None)
         self.tail = Node(None, None)
+        # These are important as they are sentinels: head and tail will always be dummy nodes
         self.tail.prev = self.head
         self.head.next = self.tail
 
@@ -87,3 +88,22 @@ print(cache.dll.head.next.val)
 print(cache.dll.tail.prev.val)
 print("----")
 print(cache.dll.size)
+
+"""
+The main idea behind this implementation is to combine a hashmap and a doubly linked list in order to have fast access to the data we need and sort it in the fastest way possible.
+We need to sort data because the LRUCache has a capacity.
+If we try to add data beyond that capacity, we must evict the least used key. This means that we need to track the most and least used keys.
+The map is key = int, value = doubly linked list node.
+When we get by key, we return the node value if we have it in the map otherwise we return -1.
+But if we have the node, we also need to put that node at the top of the doubly linked list.
+
+When we put with key and value, we first check if we already have that key in the map.
+If we have it, we put it at the top of the doubly linked list with the new value.
+Otherwise we just create a new node and add it to the top of the doubly linked list.
+In both cases we obviously add the node to the map as well.
+Then if the size of the doubly linked list is more than the LRUCache capacity, we pop the last node of the doubly linked list and delete its key from the map.
+
+The time complexity of get and put methods is O(1) constant time because we have fast access to the all the nodes we need thanks to the combination of the map and the doubly linked list.
+
+The space complexity of this all algorithm is O(n) where n is the LRUCache capacity.
+"""
