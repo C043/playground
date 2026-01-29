@@ -62,5 +62,5 @@ Quick select theory:
 - Now the pivot sits exactly where it would be in sorted order. Count how many numbers ended up on its left - that's its rank.
 - If that rank matches the one you want, you're done because the pivot is your number. (Even if we're looking for the kth largest, it's easier to just count from the left because biggest is the same as n - k)
 - If you still need a smaller rank, ignore the left numbers and repeat with the right pile (adjusting k because you threw some cards away)
-Because each round throws away a big chunk of the numbers, you usually fin your card after looking at just a couple of smaller piles instead of sorting everything.
+Because each round throws away a big chunk of the numbers, you usually find your card after looking at just a couple of smaller piles instead of sorting everything.
 """
