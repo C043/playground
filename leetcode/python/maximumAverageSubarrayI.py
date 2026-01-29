@@ -117,4 +117,19 @@ solution = Solution()
 print(solution.findMaxAverage(nums, 93))
 
 """
+The base idea behind this implementation is simple.
+Since the subarray length is constant, the bigger the sum, the bigger the average.
+This means that we don't have to calculate the average every time, we just need to get the maximum subarray sum and return that divided by k to get the average.
+We keep track of the window sum and we keep track of the maximum sum
+We start the window sum by summing the first window, from index 0 to index k - 1.
+This is also our max sum right now.
+
+Then we start a loop from k until the list is over.
+We subtract the number just before the window and we sum the new number in the window to the window sum as the window is moving.
+We update the max sum if the window sum is higher than the current max sum.
+At the end of the loop, we'll have the max sum that we can divide by k and return it to get the maximum average.
+
+This implementation is O(n) in time complexity as it grows linearly with the nums list length.
+
+The space complexity is O(1) because we just keep track of some variables.
 """
