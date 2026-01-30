@@ -37,6 +37,10 @@ nums = [10, 20, 30, 40, 50, 60, 70, 80, 90]
 print(solution.threeSumClosest(nums, 1))
 
 """
+The main idea here is to use a two pointer algorithm fixing one number at a time in a nested loop.
+We then calculate the absolute difference between target and current triplet and target and current closest solution.
+We update the current solution accordingly and move the pointers to check every element in the list.
+
 The time complexity is O(n2)
 The space complexity is O(1)
 """
