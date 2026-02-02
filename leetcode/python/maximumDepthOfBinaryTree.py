@@ -9,6 +9,14 @@ class TreeNode:
 
 
 class Solution:
+    def recursiveMaxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+
+        return 1 + max(
+            self.recursiveMaxDepth(root.left), self.recursiveMaxDepth(root.right)
+        )
+
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
@@ -39,7 +47,7 @@ root = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
 root = TreeNode(1, None, TreeNode(2))
 root = TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3, None, TreeNode(5)))
 solution = Solution()
-print(solution.maxDepth(root))
+print(solution.recursiveMaxDepth(root))
 
 """
 This implementation uses BFS to calculate the max depth
