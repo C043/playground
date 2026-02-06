@@ -16,9 +16,13 @@ class Solution:
         if targetSum - root.val == 0:
             return 1
 
-        return count
-    def helper(self, root: Optional[TreeNode], targetSum: int, path: deque[int], count: int) -> int:
+        return
 
+    def helper(
+        self, root: Optional[TreeNode], targetSum: int, path: deque[int], count: int
+    ) -> int:
+        if not root:
+            return count
 
 
 root = TreeNode(
