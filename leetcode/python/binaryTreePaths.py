@@ -38,3 +38,12 @@ class Solution:
 root = TreeNode(1, TreeNode(2, None, TreeNode(5)), TreeNode(3))
 solution = Solution()
 print(solution.binaryTreePaths(root))
+
+"""
+This solution uses DFS tree traversal and it keeps track of the path.
+When we arrive to a leaf, we convert the path to a string and join the string with the "->" separator.
+We append the string to the result variable that we return at the end.
+
+Time complexity is O(n) because we visit every node once
+Space complexity is O(h) where h is the max height of the tree
+"""
