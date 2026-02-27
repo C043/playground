@@ -1,5 +1,5 @@
 from collections import defaultdict, deque
-from typing import DefaultDict, Dict, List
+from typing import Dict, List
 
 
 class Solution:
@@ -45,3 +45,10 @@ source = 7
 destination = 5
 solution = Solution()
 print(solution.validPath(n, edges, source, destination))
+
+"""
+This solution creates the adjacency list of the graph and then uses BFS graph traversal starting from the source to find out if there is a path to destination.
+
+Time complexity is O(n + e) because we build the adjacency list and traverse every node once
+Space complexity is O(n + e) because we keep track of every adjacency + visited + queue. In the worst case it could be O(n2)
+"""
