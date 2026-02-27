@@ -25,8 +25,6 @@ class Solution:
                 return True
 
             neighbors = adjacencyList[key]
-            print(key)
-            print(neighbors)
 
             for neighbor in neighbors:
                 queue.append(neighbor)
