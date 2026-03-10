@@ -1,42 +1,41 @@
-from typing import List, Set
+from collections import deque
+from typing import DefaultDict, List, Set
 
 
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        visited: Set[int] = set()
-        result = 0
+        adjacencyList: dict[int, List[int]] = DefaultDict(list)
+        result = 1
 
-        def check(i, j):
-            node = isConnected[i][j]
-            if node == 0:
-                return
-            elif int(f"{i}{j}") in visited:
-                return
-
-            # We put the nodes in visited so we don't visit them more than once
-            visited.add(int(f"{i}{j}"))
-
-            if j + 1 in range(len(isConnected[i])):
-                check(i, j + 1)
-            if j - 1 in range(len(isConnected[i])):
-                check(i, j - 1)
-            if i + 1 in range(len(isConnected)):
-                check(i + 1, j)
-            if i - 1 in range(len(isConnected)):
-                check(i - 1, j)
-
-        # Loop over the graph
         for i in range(len(isConnected)):
             for j in range(len(isConnected[i])):
-                if int(f"{i}{j}") in visited:
+                if j == i:
                     continue
 
-                city = isConnected[i][j]
-                # When we visit a 1 node, we explore all its surroundings recursively until we sto finding 1s
-                # We up the counter by one because we found a provence
-                if city == 1:
-                    result += 1
-                    check(i, j)
+                if isConnected[i][j] != 0:
+                    adjacencyList[i].append(j)
+
+        queue: deque[int] = deque([0])
+        visited: Set[int] = {0}
+
+        while queue:
+            city = queue.popleft()
+
+            neighbors: List[int] = adjacencyList[city]
+
+            for neighbor in neighbors:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                    visited.add(neighbor)
+
+            if not queue and len(visited) < len(isConnected):
+                result += 1
+                notVisited: List[int] = list(
+                    set(list(range(len(isConnected)))) - visited
+                )
+                if notVisited:
+                    queue.append(notVisited[0])
+                    visited.add(notVisited[0])
 
         return result
 
@@ -44,3 +43,20 @@ class Solution:
 isConnected = [[1, 1, 0], [1, 1, 0], [0, 0, 1]]
 solution = Solution()
 print(solution.findCircleNum(isConnected))
+
+"""
+This solution is divided in two major sections:
+- The creation of the adjacency list
+- The graph traversal
+
+The creation of the adjacency list is simple, we loop over every city edge and we append the connection to the city list of neighbors.
+
+Once we have the adjacency list, we start a queue with the first city and start the graph traversal.
+Once the queue is empty, we check if we visited every city.
+If we did, it means that there is only one province.
+If we did not, we find one city that we did not visited making the difference between the visited set and a list that contains the numbers from 0 to the number of cities in the isConnected list.
+We add one to the result because it means that these cities are not connected to the ones in we already visited and we add the city to the queue and to visited.
+The loop keep going until we visited every city. One way or another.
+
+Time and space complexity are O(n^2)
+"""
