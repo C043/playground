@@ -75,7 +75,7 @@ print(
 )
 
 """
-The main concept of this algorithm is that we trace back from the cells touch the oceans creating two separated sets that contains all the cells in the path from the ocean to the rest of the graph.
+The main concept of this algorithm is that we trace back from the cells that touch the oceans creating two separated sets that contains all the cells in the path from the ocean to the rest of the graph.
 We do this populating two separated sets and queues with the cells from each border (because those cells surely touch the oceans).
 Then we perform the BFS graph traversal adding to the queue and to the set only the neighbors cells that are inside the graph constraints, we did not visit yet and that have their height more or equal to the current cell.
 This ensures that the water can drain through those cells because the current cell is lower than the neighbors.
