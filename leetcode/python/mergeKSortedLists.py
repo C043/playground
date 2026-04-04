@@ -1,5 +1,5 @@
-from typing import List, Optional
 import heapq
+from typing import List, Optional
 
 
 # @leet start
