@@ -2,45 +2,40 @@ from typing import List
 
 
 class Solution:
-    def trap(self, height: List[int]) -> int:
+    def trap(self, heights: List[int]) -> int:
         left = 0
-        right = len(height) - 1
-        leftMax = 0
-        rightMax = 0
-        water = 0
+        right = len(heights) - 1
+        currentMax = 0
 
         while left < right:
-            if height[left] < height[right]:
-                leftMax = max(leftMax, height[left])
-                water += leftMax - height[left]
+            width = right - left
+            height = min(heights[left], heights[right])
+            currentArea = width * height
+
+            currentMax = max(currentMax, currentArea)
+
+            if heights[left] < heights[right]:
                 left += 1
             else:
-                rightMax = max(rightMax, height[right])
-                water += rightMax - height[right]
                 right -= 1
 
-        return water
+        return currentMax
 
 
 height = [4, 2, 0, 3, 2, 5]
 height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+height = [3, 4, 1, 2, 2, 4, 1, 3, 2]
 solution = Solution()
 print(solution.trap(height))
 
 """
-This implementation is based on the fact that: water is trapped by the shorter of the tallest walls on both sides.
+One pass, two pointers, always move the shorter wall.
 
-We create two pointers, one at the start of the array, and one at the end of the array.
-We create empty variables to keep track of the tallest wall from the left and from the right
-And of course we create a varable to store the trapped water.
-
-Then we loop while left is less than right.
-We check if the left is smaller than the right.
-If so, we update left max wall, water and we go up by one in left.
-We calculate water summing up the left max wall minus the left height (the current one).
-If not, we do the same from the right with the only difference that we reduce right by one.
-
-Then we return the water.
+Initialize pointers
+Calculate area
+Update max area if necessary
+Move pointer on shorter wall
+Repeat until pointers are on the same wall
 
 The time complexity is O(n)
 The space complexity is O(1)
