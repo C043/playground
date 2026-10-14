@@ -24,6 +24,7 @@ class Solution:
             elif currentNum == 2:
                 nums[mid], nums[high] = nums[high], nums[mid]
                 high -= 1
+        print(nums)
 
 
 solution = Solution()
